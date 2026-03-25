@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
-import { useTaskStore } from './store/taskStore';
-import { applyFilters } from './store/taskStore';
+import React, { useMemo, Suspense, lazy } from 'react';
+import { useTaskStore, applyFilters } from './store/taskStore';
 import { ViewMode, User } from './types';
 import { FilterBar } from './components/FilterBar';
-import { KanbanView } from './views/KanbanView';
-import { ListView } from './views/ListView';
-import { TimelineView } from './views/TimelineView';
+
+const KanbanView = lazy(() => import('./views/KanbanView').then(m => ({ default: m.KanbanView })));
+const ListView = lazy(() => import('./views/ListView').then(m => ({ default: m.ListView })));
+const TimelineView = lazy(() => import('./views/TimelineView').then(m => ({ default: m.TimelineView })));
 import { useUrlFilters } from './hooks/useUrlFilters';
 import { useMockPresence } from './hooks/useMockPresence';
 
@@ -135,6 +135,7 @@ export default function App() {
               <button
                 key={tab.id}
                 type="button"
+                aria-label={`Switch to ${tab.label} view`}
                 onClick={() => setViewMode(tab.id)}
                 className={`
                   flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium
@@ -163,16 +164,16 @@ export default function App() {
       </header>
 
       {/* ─── Main Content ───────────────────────────────────────── */}
-      <main className="flex-1 overflow-hidden">
-        {viewMode === 'kanban' && (
-          <KanbanView presenceMap={taskPresence} />
-        )}
-        {viewMode === 'list' && (
-          <ListView presenceMap={taskPresence} />
-        )}
-        {viewMode === 'timeline' && (
-          <TimelineView presenceMap={taskPresence} />
-        )}
+      <main className="flex-1 overflow-hidden relative">
+        <Suspense fallback={
+          <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-slate-500">
+            <div className="w-5 h-5 border-2 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin"></div>
+          </div>
+        }>
+          {viewMode === 'kanban' && <KanbanView presenceMap={taskPresence} />}
+          {viewMode === 'list' && <ListView presenceMap={taskPresence} />}
+          {viewMode === 'timeline' && <TimelineView presenceMap={taskPresence} />}
+        </Suspense>
       </main>
     </div>
   );

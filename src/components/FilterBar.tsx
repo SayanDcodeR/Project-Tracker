@@ -38,6 +38,7 @@ function MultiSelect<T extends string>({
     <div ref={ref} className="relative">
       <button
         type="button"
+        aria-label={`Toggle ${label} filter`}
         onClick={() => setOpen(!open)}
         className={`
           flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium
@@ -76,6 +77,7 @@ function MultiSelect<T extends string>({
               <button
                 key={opt}
                 type="button"
+                aria-label={`Toggle filter option ${opt}`}
                 onClick={() => toggle(opt)}
                 className={`
                   w-full text-left px-3 py-1.5 text-xs flex items-center gap-2
@@ -160,6 +162,7 @@ export const FilterBar = React.memo(function FilterBar() {
         <label className="text-[10px] text-slate-500 uppercase tracking-wider">From</label>
         <input
           type="date"
+          aria-label="Filter date range start"
           value={filters.dateRangeStart ?? ''}
           onChange={(e) =>
             setFilters({ dateRangeStart: e.target.value || null })
@@ -173,6 +176,7 @@ export const FilterBar = React.memo(function FilterBar() {
         <label className="text-[10px] text-slate-500 uppercase tracking-wider">To</label>
         <input
           type="date"
+          aria-label="Filter date range end"
           value={filters.dateRangeEnd ?? ''}
           onChange={(e) =>
             setFilters({ dateRangeEnd: e.target.value || null })
@@ -185,6 +189,7 @@ export const FilterBar = React.memo(function FilterBar() {
       {hasActiveFilters && (
         <button
           type="button"
+          aria-label="Clear all filters"
           onClick={resetFilters}
           className="px-2.5 py-1.5 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
         >

@@ -55,6 +55,7 @@ function SortHeader({ label, field, currentSort, onSort, className = '' }: SortH
   return (
     <button
       type="button"
+      aria-label={`Sort by ${label}`}
       onClick={handleClick}
       className={`flex items-center gap-1 text-[11px] uppercase tracking-wider font-semibold hover:text-slate-200 transition-colors ${
         isActive ? 'text-indigo-400' : 'text-slate-500'
@@ -119,6 +120,7 @@ const ListRow = React.memo(function ListRow({ task, presenceUsers, onStatusChang
       <div className="w-[130px] shrink-0">
         <select
           value={task.status}
+          aria-label="Change task status"
           onChange={(e) => onStatusChange(task.id, e.target.value as TaskStatus)}
           className="bg-slate-800/80 border border-slate-700/50 rounded-lg text-[11px] text-slate-300 px-2 py-1 w-full focus:outline-none focus:border-indigo-500/50 cursor-pointer"
         >
