@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Task, TaskPriority, User } from '../types';
+import { Task, User } from '../types';
 import { Badge } from './Badge';
 
 interface TaskCardProps {
