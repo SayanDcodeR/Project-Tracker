@@ -2,12 +2,12 @@ import React, { useMemo, Suspense, lazy } from 'react';
 import { useTaskStore, applyFilters } from './store/taskStore';
 import { ViewMode, User } from './types';
 import { FilterBar } from './components/FilterBar';
+import { useUrlFilters } from './hooks/useUrlFilters';
+import { useMockPresence } from './hooks/useMockPresence';
 
 const KanbanView = lazy(() => import('./views/KanbanView').then(m => ({ default: m.KanbanView })));
 const ListView = lazy(() => import('./views/ListView').then(m => ({ default: m.ListView })));
 const TimelineView = lazy(() => import('./views/TimelineView').then(m => ({ default: m.TimelineView })));
-import { useUrlFilters } from './hooks/useUrlFilters';
-import { useMockPresence } from './hooks/useMockPresence';
 
 // ─── View Icons ──────────────────────────────────────────────────────
 
